@@ -76,7 +76,7 @@ def generate_launch_description():
     declared_arguments.append(
         DeclareLaunchArgument(
             "description_file",
-            default_value="ros2_control.urdf.xacro",
+            default_value="ros2_control_A.urdf.xacro", # control_A with arm, control_B no arm
             description="URDF/XACRO description file with the robot.",
         )
     )
@@ -112,7 +112,7 @@ def generate_launch_description():
         [
             PathJoinSubstitution([FindExecutable(name="xacro")]),
             " ",
-            PathJoinSubstitution([FindPackageShare(description_package), "urdf", description_file]),
+            PathJoinSubstitution([FindPackageShare(description_package), "robots", description_file]),
             " ",
             "safety_limits:=",
             safety_limits,

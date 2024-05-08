@@ -1,0 +1,117 @@
+<robot name="wheel">
+  <xacro:include filename="$(find robot_description)/urdf/utils/utils.urdf.xacro"/>
+  
+  <!-- WHEEL XACRO -->
+  <xacro:macro name="rover_wheel" params="prefix parent *origin">
+    <!-- TIRE -->
+    <joint name="${prefix}wheel_joint" type="continuous">
+      <xacro:insert_block name="origin"/>
+      <parent link="${parent}"/>
+      <child link="${prefix}_wheel"/>
+      <axis xyz="0 0 1" rpy="0 0 0"/>
+      <limit effort="5000" velocity="100"/>
+      <dynamics damping="0.05" friction="0.1"/>
+    </joint>
+
+    <link name="left_b_wheel">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="2.0"/>
+        <inertia ixx="0.01936" ixy="0" ixz="0" iyy="0.03745" iyz="0" izz="0.7564"/>
+      </inertial>
+      <visual name="Torus.000">
+        <origin xyz="0 0 0" rpy="-3.14159 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find robot_description)/meshes/dae/Torus.004.dae" scale="0.24 0.24 0.6"/>
+        </geometry>
+      </visual>
+      <collision name="Torus.000.000">
+        <origin xyz="0 0 0" rpy="-3.14159 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find robot_description)/meshes/dae/Torus.005.dae" scale="0.6 0.6 0.6"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="left_f_wheel">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="2.0"/>
+        <inertia ixx="0.01936" ixy="0" ixz="0" iyy="0.03745" iyz="0" izz="0.7564"/>
+      </inertial>
+      <visual name="Torus.003">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find robot_description)/meshes/dae/Torus.003.dae" scale="0.24 0.24 0.6"/>
+        </geometry>
+      </visual>
+      <collision name="Torus.003.000">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find robot_description)/meshes/dae/Torus.006.dae" scale="0.6 0.6 0.6"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="right_b_wheel">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="2.0"/>
+        <inertia ixx="0.01936" ixy="0" ixz="0" iyy="0.03745" iyz="0" izz="0.7564"/>
+      </inertial>
+      <visual name="Torus.001">
+        <origin xyz="0 0 0" rpy="-3.14159 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find robot_description)/meshes/dae/Torus.007.dae" scale="0.24 0.24 0.6"/>
+        </geometry>
+      </visual>
+      <collision name="Torus.001.000">
+        <origin xyz="0 0 0" rpy="-3.14159 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find robot_description)/meshes/dae/Torus.008.dae" scale="0.6 0.6 0.6"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="right_f_wheel">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="2.0"/>
+        <inertia ixx="0.14197" ixy="0" ixz="0" iyy="0.23407" iyz="0" izz="0.14197"/>
+      </inertial>
+      <visual name="Torus.002">
+        <origin xyz="0 0 0" rpy="-3.14159 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find robot_description)/meshes/dae/Torus.002.dae" scale="0.24 0.24 0.6"/>
+        </geometry>
+      </visual>
+      <collision name="Torus.002.000">
+        <origin xyz="0 0 0" rpy="-3.14159 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find robot_description)/meshes/dae/Torus.000.dae" scale="0.6 0.6 0.6"/>
+        </geometry>
+      </collision>
+    </link>
+    
+    <!-- Transmission is important to link the joints and the controller (see summit_xl_control/config/summit_xl_control.yaml) -->
+    <transmission name="${prefix}_wheel_joint_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${prefix}wheel_joint">
+        <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${prefix}wheel_joint_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+    <gazebo reference="${prefix}wheel_link">
+      <mu1>5</mu1>
+      <mu2>5</mu2>
+      <!--
+      <kp>2.75e6</kp>
+      <kd>8.25e1</kd>
+      <fdir1>0 0 0</fdir1>
+      <maxContacts>4</maxContacts
+      -->
+    </gazebo>
+  </xacro:macro>
+</robot>

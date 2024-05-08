@@ -9,18 +9,16 @@ from launch.conditions import IfCondition
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 
-
 def generate_launch_description():
     world_package = get_package_share_directory('robot_description')
-
     use_sim_time = LaunchConfiguration('use_sim_time', default='true')
     position_x = LaunchConfiguration("position_x")
     position_y = LaunchConfiguration("position_y")
+    position_z = LaunchConfiguration("position_z")
     orientation_yaw = LaunchConfiguration("orientation_yaw")
     odometry_source = LaunchConfiguration("odometry_source", default="world")
-    robot_name = LaunchConfiguration("ros2_control.urdf.xacro", default="")
+    robot_name = LaunchConfiguration("robot_name", default="")
     gui_rviz = LaunchConfiguration("gui_rviz", default='true')
-    robot_id = LaunchConfiguration("robot_id", default='robot')
 
     spawn_entity = Node(
         package='gazebo_ros',
@@ -31,6 +29,7 @@ def generate_launch_description():
             '-entity', PythonExpression(['"', robot_name, '"']), 
             '-x', position_x,
             '-y', position_y,
+            '-z', position_z,
             '-Y', orientation_yaw
         ]
     )
@@ -42,7 +41,7 @@ def generate_launch_description():
     )
 
     rviz_config_file = PathJoinSubstitution(
-        [FindPackageShare("robot_description"), "rviz", "view_robot.rviz"]
+        [FindPackageShare("robot_description"), "rviz", "robot.rviz"]
     )
 
     rviz_node = Node(
@@ -55,13 +54,14 @@ def generate_launch_description():
     )
 
     return LaunchDescription([
-        DeclareLaunchArgument('world', default_value=[PythonExpression(['"',join(world_package, 'worlds'),'" + "/empty.sdf"']),'']),
+        DeclareLaunchArgument('world', default_value=[PythonExpression(['"',join(world_package, 'worlds'),'" + "/floor.world"']),'']),
         DeclareLaunchArgument('gui', default_value='true'),
-        DeclareLaunchArgument('verbose', default_value='false'),
+        DeclareLaunchArgument('verbose', default_value='true'),
         DeclareLaunchArgument('use_sim_time', default_value = use_sim_time),
-        DeclareLaunchArgument("position_x", default_value="10.0"),
-        DeclareLaunchArgument("position_y", default_value="10.0"),
-        DeclareLaunchArgument("orientation_yaw", default_value="2.35"),
+        DeclareLaunchArgument("position_x", default_value="-1.0"),
+        DeclareLaunchArgument("position_y", default_value="-1.0"),
+        DeclareLaunchArgument("position_z", default_value="0.35"),
+        DeclareLaunchArgument("orientation_yaw", default_value="0.0"),
         DeclareLaunchArgument("odometry_source", default_value = odometry_source),
         gazebo,
         spawn_entity,
