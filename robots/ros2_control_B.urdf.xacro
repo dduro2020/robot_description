@@ -1,238 +1,344 @@
 <?xml version="1.0"?>
 <!-- created with Phobos 1.0.1 "Capricious Choutengan" -->
-<xacro:macro name="ros2_control">
-    <gazebo>
-      <plugin name="ros_control" filename="libgazebo_ros2_control.so">
-        <parameters>$(arg config_controllers)</parameters>
-      </plugin>
-    </gazebo>
-    <ros2_control name="robot" type="system">
-      <hardware>
-        <plugin>gazebo_ros2_control/GazeboSystem</plugin>
-      </hardware>
-  <!-- <robot name="robot" xmlns:xacro="http://wiki.ros.org/xacro"> -->
+  <robot name="robot" xmlns:xacro="http://wiki.ros.org/xacro">
     
-      <xacro:include filename="$(find robot_description)/urdf/sensors/sensors.urdf.xacro"/>
-      <xacro:arg name="prefix" default=""/>
-      <xacro:arg name="my_robot" default=""/>
-      
+    <xacro:include filename="$(find robot_description)/urdf/sensors/sensors.urdf.xacro"/>
+    <xacro:arg name="prefix" default=""/>
+    <xacro:arg name="my_robot" default=""/>
 
-      <link name="base_link">
-        <inertial>
-          <origin xyz="0 0 0" rpy="0 0 0"/>
-          <mass value="150.0"/>
-          <inertia ixx="37.11703" ixy="10.21381" ixz="0" iyy="63.78499" iyz="0" izz="72.02697"/>
-        </inertial>
-        <visual name="Cube.000.000">
-          <origin xyz="0 0 0" rpy="1.5708 0 0"/>
-          <geometry>
-            <mesh filename="file://$(find robot_description)/meshes/dae/Cube.025.dae" scale="1.0 1.0 0.81818"/>
-          </geometry>
-          <material name="Material"/>
-        </visual>
-        <collision name="Cube.000.000.000">
-          <origin xyz="0 0 0" rpy="1.5708 0 0"/>
-          <geometry>
-            <mesh filename="file://$(find robot_description)/meshes/dae/Cube.027.dae" scale="1.0 1.0 0.81818"/>
-          </geometry>
-        </collision>
-      </link>
+    <!-- <xacro:include filename="$(find robot_description)/urdf/wheels/wheels.urdf.xacro"/>
+    <xacro:arg name="prefix" default=""/> -->
 
-      <link name="left_b_wheel">
-        <inertial>
-          <origin xyz="0 0 0" rpy="0 0 0"/>
-          <mass value="2.0"/>
-          <inertia ixx="0.01936" ixy="0" ixz="0" iyy="0.03745" iyz="0" izz="0.7564"/>
-        </inertial>
-        <visual name="Torus.000">
-          <origin xyz="0 0 0" rpy="-3.14159 0 0"/>
-          <geometry>
-            <mesh filename="file://$(find robot_description)/meshes/dae/Torus.004.dae" scale="0.24 0.24 0.6"/>
-          </geometry>
-        </visual>
-        <collision name="Torus.000.000">
-          <origin xyz="0 0 0" rpy="-3.14159 0 0"/>
-          <geometry>
-            <mesh filename="file://$(find robot_description)/meshes/dae/Torus.005.dae" scale="0.6 0.6 0.6"/>
-          </geometry>
-        </collision>
-      </link>
+    <xacro:include filename="$(find robot_description)/urdf/control/ros2_control.urdf.xacro"/>
+    <xacro:arg name="config_controllers" default="$(find robot_description)/config/wheels_controller.yaml/"/>
+    <xacro:arg name="update_rate" default="100"/>
+    <xacro:ros2_control/>
 
-      <link name="left_f_wheel">
-        <inertial>
-          <origin xyz="0 0 0" rpy="0 0 0"/>
-          <mass value="2.0"/>
-          <inertia ixx="0.01936" ixy="0" ixz="0" iyy="0.03745" iyz="0" izz="0.7564"/>
-        </inertial>
-        <visual name="Torus.003">
-          <origin xyz="0 0 0" rpy="0 0 0"/>
-          <geometry>
-            <mesh filename="file://$(find robot_description)/meshes/dae/Torus.003.dae" scale="0.24 0.24 0.6"/>
-          </geometry>
-        </visual>
-        <collision name="Torus.003.000">
-          <origin xyz="0 0 0" rpy="0 0 0"/>
-          <geometry>
-            <mesh filename="file://$(find robot_description)/meshes/dae/Torus.006.dae" scale="0.6 0.6 0.6"/>
-          </geometry>
-        </collision>
-      </link>
+    <link name="base_footprint">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </link>
+    
+    <link name="base_link">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="150.0"/>
+        <inertia ixx="37.11703" ixy="10.21381" ixz="0" iyy="63.78499" iyz="0" izz="72.02697"/>
+      </inertial>
+      <visual name="Cube.000.000">
+        <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find robot_description)/meshes/dae/Cube.025.dae" scale="1.0 1.0 0.81818"/>
+        </geometry>
+        <material name="Material"/>
+      </visual>
+      <collision name="Cube.000.000.000">
+        <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find robot_description)/meshes/dae/Cube.027.dae" scale="1.0 1.0 0.81818"/>
+        </geometry>
+      </collision>
+    </link>
 
-      <link name="right_b_wheel">
-        <inertial>
-          <origin xyz="0 0 0" rpy="0 0 0"/>
-          <mass value="2.0"/>
-          <inertia ixx="0.01936" ixy="0" ixz="0" iyy="0.03745" iyz="0" izz="0.7564"/>
-        </inertial>
-        <visual name="Torus.001">
-          <origin xyz="0 0 0" rpy="-3.14159 0 0"/>
-          <geometry>
-            <mesh filename="file://$(find robot_description)/meshes/dae/Torus.007.dae" scale="0.24 0.24 0.6"/>
-          </geometry>
-        </visual>
-        <collision name="Torus.001.000">
-          <origin xyz="0 0 0" rpy="-3.14159 0 0"/>
-          <geometry>
-            <mesh filename="file://$(find robot_description)/meshes/dae/Torus.008.dae" scale="0.6 0.6 0.6"/>
-          </geometry>
-        </collision>
-      </link>
+    <link name="back_left_wheel">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="2.0"/>
+        <inertia ixx="0.01936" ixy="0" ixz="0" iyy="0.03745" iyz="0" izz="0.7564"/>
+      </inertial>
+      <visual name="Torus.000">
+        <origin xyz="0 0 0" rpy="-3.14159 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find robot_description)/meshes/dae/Torus.004.dae" scale="0.24 0.24 0.6"/>
+        </geometry>
+      </visual>
+      <collision name="Torus.000.000">
+        <origin xyz="0 0 0" rpy="-3.14159 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find robot_description)/meshes/dae/Torus.005.dae" scale="0.6 0.6 0.6"/>
+        </geometry>
+      </collision>
+    </link>
 
-      <link name="right_f_wheel">
-        <inertial>
-          <origin xyz="0 0 0" rpy="0 0 0"/>
-          <mass value="2.0"/>
-          <inertia ixx="0.14197" ixy="0" ixz="0" iyy="0.23407" iyz="0" izz="0.14197"/>
-        </inertial>
-        <visual name="Torus.002">
-          <origin xyz="0 0 0" rpy="-3.14159 0 0"/>
-          <geometry>
-            <mesh filename="file://$(find robot_description)/meshes/dae/Torus.002.dae" scale="0.24 0.24 0.6"/>
-          </geometry>
-        </visual>
-        <collision name="Torus.002.000">
-          <origin xyz="0 0 0" rpy="-3.14159 0 0"/>
-          <geometry>
-            <mesh filename="file://$(find robot_description)/meshes/dae/Torus.000.dae" scale="0.6 0.6 0.6"/>
-          </geometry>
-        </collision>
-      </link>
+    <link name="front_left_wheel">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="2.0"/>
+        <inertia ixx="0.01936" ixy="0" ixz="0" iyy="0.03745" iyz="0" izz="0.7564"/>
+      </inertial>
+      <visual name="Torus.003">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find robot_description)/meshes/dae/Torus.003.dae" scale="0.24 0.24 0.6"/>
+        </geometry>
+      </visual>
+      <collision name="Torus.003.000">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find robot_description)/meshes/dae/Torus.006.dae" scale="0.6 0.6 0.6"/>
+        </geometry>
+      </collision>
+    </link>
 
-      <link name="zback_box">
-        <inertial>
-          <origin xyz="0 0 0" rpy="0 0 0"/>
-          <mass value="0.001"/>
-          <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
-        </inertial>
-        <visual name="Cube">
-          <origin xyz="0 0 0" rpy="0 0 0"/>
-          <geometry>
-            <box size="0.1 1.5 1.35"/>
-          </geometry>
-        </visual>
-        <collision name="Cube.000">
-          <origin xyz="0 0 0" rpy="0 0 0"/>
-          <geometry>
-            <mesh filename="file://$(find robot_description)/meshes/dae/Cube.033.dae" scale="1.0 1.0 1.0"/>
-          </geometry>
-        </collision>
-      </link>
+    <link name="back_right_wheel">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="2.0"/>
+        <inertia ixx="0.01936" ixy="0" ixz="0" iyy="0.03745" iyz="0" izz="0.7564"/>
+      </inertial>
+      <visual name="Torus.001">
+        <origin xyz="0 0 0" rpy="-3.14159 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find robot_description)/meshes/dae/Torus.007.dae" scale="0.24 0.24 0.6"/>
+        </geometry>
+      </visual>
+      <collision name="Torus.001.000">
+        <origin xyz="0 0 0" rpy="-3.14159 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find robot_description)/meshes/dae/Torus.008.dae" scale="0.6 0.6 0.6"/>
+        </geometry>
+      </collision>
+    </link>
 
-      <link name="zfront_box">
-        <inertial>
-          <origin xyz="0 0 0" rpy="0 0 0"/>
-          <mass value="0.001"/>
-          <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
-        </inertial>
-        <visual name="Cube.002">
-          <origin xyz="0 0 0" rpy="0 0 0"/>
-          <geometry>
-            <box size="0.1 1.5 1.35"/>
-          </geometry>
-        </visual>
-        <collision name="Cube.002.000">
-          <origin xyz="0 0 0" rpy="0 0 0"/>
-          <geometry>
-            <mesh filename="file://$(find robot_description)/meshes/dae/Cube.034.dae" scale="1.0 1.0 1.0"/>
-          </geometry>
-        </collision>
-      </link>
+    <link name="front_right_wheel">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="2.0"/>
+        <inertia ixx="0.14197" ixy="0" ixz="0" iyy="0.23407" iyz="0" izz="0.14197"/>
+      </inertial>
+      <visual name="Torus.002">
+        <origin xyz="0 0 0" rpy="-3.14159 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find robot_description)/meshes/dae/Torus.002.dae" scale="0.24 0.24 0.6"/>
+        </geometry>
+      </visual>
+      <collision name="Torus.002.000">
+        <origin xyz="0 0 0" rpy="-3.14159 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find robot_description)/meshes/dae/Torus.000.dae" scale="0.6 0.6 0.6"/>
+        </geometry>
+      </collision>
+    </link>
 
-      <link name="zleft_box">
-        <inertial>
-          <origin xyz="0 0 0" rpy="0 0 0"/>
-          <mass value="0.001"/>
-          <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
-        </inertial>
-        <visual name="Cube.003">
-          <origin xyz="0 0 0" rpy="0 0 0"/>
-          <geometry>
-            <box size="0.1 1.3 1.35"/>
-          </geometry>
-        </visual>
-        <collision name="Cube.003.000">
-          <origin xyz="0 0 0" rpy="0 0 0"/>
-          <geometry>
-            <mesh filename="file://$(find robot_description)/meshes/dae/Cube.032.dae" scale="1.0 1.0 1.0"/>
-          </geometry>
-        </collision>
-      </link>
+    <link name="zback_box">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="Cube">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.1 1.5 1.35"/>
+        </geometry>
+      </visual>
+      <collision name="Cube.000">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find robot_description)/meshes/dae/Cube.033.dae" scale="1.0 1.0 1.0"/>
+        </geometry>
+      </collision>
+    </link>
 
-      <link name="zright_box">
-        <inertial>
-          <origin xyz="0 0 0" rpy="0 0 0"/>
-          <mass value="0.001"/>
-          <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
-        </inertial>
-        <visual name="Cube.004">
-          <origin xyz="0 0 0" rpy="0 0 0"/>
-          <geometry>
-            <box size="0.1 1.3 1.35"/>
-          </geometry>
-        </visual>
-        <collision name="Cube.004.000">
-          <origin xyz="0 0 0" rpy="0 0 0"/>
-          <geometry>
-            <mesh filename="file://$(find robot_description)/meshes/dae/Cube.035.dae" scale="1.0 1.0 1.0"/>
-          </geometry>
-        </collision>
-      </link>
+    <link name="zfront_box">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="Cube.002">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.1 1.5 1.35"/>
+        </geometry>
+      </visual>
+      <collision name="Cube.002.000">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find robot_description)/meshes/dae/Cube.034.dae" scale="1.0 1.0 1.0"/>
+        </geometry>
+      </collision>
+    </link>
 
-      <joint name="zback_box" type="fixed">
-        <origin xyz="-1.2 0 0.735" rpy="0 0 0"/>
-        <parent link="base_link"/>
-        <child link="zback_box"/>
+    <link name="zleft_box">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="Cube.003">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.1 1.3 1.35"/>
+        </geometry>
+      </visual>
+      <collision name="Cube.003.000">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find robot_description)/meshes/dae/Cube.032.dae" scale="1.0 1.0 1.0"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="zright_box">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="Cube.004">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.1 1.3 1.35"/>
+        </geometry>
+      </visual>
+      <collision name="Cube.004.000">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find robot_description)/meshes/dae/Cube.035.dae" scale="1.0 1.0 1.0"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="base_joint" type="fixed">
+      <origin xyz="0 0 0.5" rpy="0 0 0"/>
+      <parent link="base_footprint"/>
+      <child link="base_link"/>
+    </joint>
+
+    <joint name="zback_box" type="fixed">
+      <origin xyz="-1.2 0 0.735" rpy="0 0 0"/>
+      <parent link="base_link"/>
+      <child link="zback_box"/>
+    </joint>
+
+    <joint name="zfront_box" type="fixed">
+      <origin xyz="0.2 0 0.735" rpy="0 0 0"/>
+      <parent link="base_link"/>
+      <child link="zfront_box"/>
+    </joint>
+
+    <joint name="zleft_box" type="fixed">
+      <origin xyz="-0.5 0.7 0.735" rpy="0 0 1.5708"/>
+      <parent link="base_link"/>
+      <child link="zleft_box"/>
+    </joint>
+
+    <joint name="zright_box" type="fixed">
+      <origin xyz="-0.5 -0.7 0.735" rpy="0 0 1.5708"/>
+      <parent link="base_link"/>
+      <child link="zright_box"/>
+    </joint>
+
+    <joint name="back_left_wheel_joint" type="continuous">
+      <origin xyz="-1.0 1.05 -0.5" rpy="-1.5708 0 0"/>
+      <parent link="base_link"/>
+      <child link="back_left_wheel"/>
+      <axis xyz="0 0 1.0"/>
+      <limit effort="0" velocity="0"/>
+    </joint>
+
+    <joint name="front_left_wheel_joint" type="continuous">
+      <origin xyz="1.0 1.05 -0.5" rpy="-1.5708 0 0"/>
+      <parent link="base_link"/>
+      <child link="front_left_wheel"/>
+      <axis xyz="0 0 1.0"/>
+      <limit effort="0" velocity="0"/>
+    </joint>
+
+    <joint name="back_right_wheel_joint" type="continuous">
+      <origin xyz="-1.0 -1.05 -0.5" rpy="-1.5708 0 0"/>
+      <parent link="base_link"/>
+      <child link="back_right_wheel"/>
+      <axis xyz="0 0 1.0"/>
+      <limit effort="0" velocity="0"/>
+    </joint>
+
+    <joint name="front_right_wheel_joint" type="continuous">
+      <origin xyz="1.0 -1.05 -0.5" rpy="-1.5708 0 0"/>
+      <parent link="base_link"/>
+      <child link="front_right_wheel"/>
+      <axis xyz="0 0 1.0"/>
+      <limit effort="0" velocity="0"/>
+    </joint>
+
+    <transmission name="$back_left_wheel_joint_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="$back_left_wheel_joint">
+        <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
       </joint>
+      <actuator name="$back_left_wheel_joint_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+    <gazebo reference="$back_left_wheel">
+      <mu1>5</mu1>
+      <mu2>5</mu2>
+    </gazebo>
 
-      <joint name="zfront_box" type="fixed">
-        <origin xyz="0.2 0 0.735" rpy="0 0 0"/>
-        <parent link="base_link"/>
-        <child link="zfront_box"/>
+    <transmission name="$front_left_wheel_joint_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="$front_left_wheel_joint">
+        <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
       </joint>
+      <actuator name="$front_left_wheel_joint_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+    <gazebo reference="$front_left_wheel">
+      <mu1>5</mu1>
+      <mu2>5</mu2>
+    </gazebo>
 
-      <joint name="zleft_box" type="fixed">
-        <origin xyz="-0.5 0.7 0.735" rpy="0 0 1.5708"/>
-        <parent link="base_link"/>
-        <child link="zleft_box"/>
+    <transmission name="$back_right_wheel_joint_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="$back_right_wheel_joint">
+        <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
       </joint>
+      <actuator name="$back_right_wheel_joint_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+    <gazebo reference="$back_right_wheel">
+      <mu1>5</mu1>
+      <mu2>5</mu2>
+    </gazebo>
 
-      <joint name="zright_box" type="fixed">
-        <origin xyz="-0.5 -0.7 0.735" rpy="0 0 1.5708"/>
-        <parent link="base_link"/>
-        <child link="zright_box"/>
+    <transmission name="$front_right_wheel_joint_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="$front_right_wheel_joint">
+        <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
       </joint>
+      <actuator name="$front_right_wheel_joint_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+    <gazebo reference="$front_right_wheel">
+      <mu1>5</mu1>
+      <mu2>5</mu2>
+    </gazebo>
 
-      <material name="Material">
-        <color rgba="0.64 0.64 0.64 1.0"/>
-      </material>
+    <material name="Material">
+      <color rgba="0.64 0.64 0.64 1.0"/>
+    </material>
 
-      <xacro:sensor_camera node_name="arm_camera" node_namespace="$(arg my_robot)" frame_prefix="$(arg prefix)arm_camera_" parent="$(arg prefix)base_link" >
-        <origin xyz="0.0 0.0 -0.01" rpy="0 3.141592 0"/>
-      </xacro:sensor_camera>
-      <xacro:sensor_imu ns="$(arg my_robot)" prefix="$(arg prefix)imu_" parent="$(arg prefix)base_link">
-        <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
-      </xacro:sensor_imu>
+    <xacro:sensor_camera node_name="arm_camera" node_namespace="$(arg my_robot)" frame_prefix="$(arg prefix)arm_camera_" parent="$(arg prefix)base_link" >
+      <origin xyz="0.0 0.0 -0.01" rpy="0 3.141592 0"/>
+    </xacro:sensor_camera>
+    <xacro:sensor_imu ns="$(arg my_robot)" prefix="$(arg prefix)imu_" parent="$(arg prefix)base_link">
+      <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+    </xacro:sensor_imu>
 
-    </ros2_control>
-  </xacro:macro>
+    <!-- <xacro:robot_wheel prefix="left_b" parent="base_link" >
+      <origin xyz="-1.0 1.05 -0.5" rpy="-1.5708 0 0"/>
+    </xacro:robot_wheel>
+    <xacro:robot_wheel prefix="left_f" parent="base_link" >
+      <origin xyz="1.0 1.05 -0.5" rpy="-1.5708 0 0"/>
+    </xacro:robot_wheel>
+    <xacro:robot_wheel prefix="right_b" parent="base_link" >
+      <origin xyz="-1.0 -1.05 -0.5" rpy="-1.5708 0 0"/>
+    </xacro:robot_wheel>
+    <xacro:robot_wheel prefix="right_f" parent="base_link" >
+      <origin xyz="1.0 -1.05 -0.5" rpy="-1.5708 0 0"/>
+    </xacro:robot_wheel> -->
+
 </robot>

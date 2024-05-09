@@ -9,15 +9,18 @@ from launch.conditions import IfCondition
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 
+from launch import LaunchDescription
+from launch.actions import ExecuteProcess
+
 def generate_launch_description():
-    world_package = get_package_share_directory('robot_description')
+    world_package = get_package_share_directory('msr_world')
     use_sim_time = LaunchConfiguration('use_sim_time', default='true')
     position_x = LaunchConfiguration("position_x")
     position_y = LaunchConfiguration("position_y")
     position_z = LaunchConfiguration("position_z")
     orientation_yaw = LaunchConfiguration("orientation_yaw")
     odometry_source = LaunchConfiguration("odometry_source", default="world")
-    robot_name = LaunchConfiguration("robot_name", default="")
+    robot_name = LaunchConfiguration("robot_name", default="robot")
     gui_rviz = LaunchConfiguration("gui_rviz", default='true')
 
     spawn_entity = Node(
@@ -41,7 +44,7 @@ def generate_launch_description():
     )
 
     rviz_config_file = PathJoinSubstitution(
-        [FindPackageShare("robot_description"), "rviz", "robot.rviz"]
+        [FindPackageShare("robot_description"), "rviz", "view_robot.rviz"]
     )
 
     rviz_node = Node(

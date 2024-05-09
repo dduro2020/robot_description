@@ -12,7 +12,7 @@ def generate_launch_description():
     declared_arguments.append(
        DeclareLaunchArgument(
             "config_controllers", 
-            default_value=join(get_package_share_directory("robot_description"),'config','rover_controller.yaml'), 
+            default_value=join(get_package_share_directory("robot_description"),'config','wheels_controller.yaml'), 
             description="Controller config file",
         )
     )
@@ -35,7 +35,7 @@ def generate_launch_description():
     controller_base_node = Node(
         package='controller_manager',
         executable='spawner',
-        arguments=['rover_base_control', '--controller-manager', 'controller_manager'],
+        arguments=['robot_base_control', '--controller-manager', 'controller_manager'],
     )
 
     nodes = [
