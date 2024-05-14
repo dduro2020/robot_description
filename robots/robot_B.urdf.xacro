@@ -3,7 +3,7 @@
   <robot name="robot" xmlns:xacro="http://wiki.ros.org/xacro">
 
     <xacro:include filename="$(find robot_description)/urdf/control/ros2_control.urdf.xacro"/>
-    <xacro:arg name="config_controllers" default="$(find robot_description)/config/rover_controller.yaml/"/>
+    <xacro:arg name="config_controllers" default="$(find robot_description)/config/wheels_controller.yaml"/>
     <xacro:arg name="update_rate" default="100"/>
     <xacro:ros2_control/> 
     
@@ -258,58 +258,58 @@
       <limit effort="5000" velocity="100"/>
     </joint>
 
-    <transmission name="$back_left_wheel_joint_trans">
+    <transmission name="back_left_wheel_joint_trans">
       <type>transmission_interface/SimpleTransmission</type>
-      <joint name="$back_left_wheel_joint">
+      <joint name="back_left_wheel_joint">
         <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
       </joint>
-      <actuator name="$back_left_wheel_joint_motor">
+      <actuator name="back_left_wheel_joint_motor">
         <mechanicalReduction>1</mechanicalReduction>
       </actuator>
     </transmission>
-    <gazebo reference="$back_left_wheel">
+    <gazebo reference="back_left_wheel">
       <mu1>5</mu1>
       <mu2>5</mu2>
     </gazebo>
 
-    <transmission name="$front_left_wheel_joint_trans">
+    <transmission name="front_left_wheel_joint_trans">
       <type>transmission_interface/SimpleTransmission</type>
-      <joint name="$front_left_wheel_joint">
+      <joint name="front_left_wheel_joint">
         <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
       </joint>
-      <actuator name="$front_left_wheel_joint_motor">
+      <actuator name="front_left_wheel_joint_motor">
         <mechanicalReduction>1</mechanicalReduction>
       </actuator>
     </transmission>
-    <gazebo reference="$front_left_wheel">
+    <gazebo reference="front_left_wheel">
       <mu1>5</mu1>
       <mu2>5</mu2>
     </gazebo>
 
-    <transmission name="$back_right_wheel_joint_trans">
+    <transmission name="back_right_wheel_joint_trans">
       <type>transmission_interface/SimpleTransmission</type>
-      <joint name="$back_right_wheel_joint">
+      <joint name="back_right_wheel_joint">
         <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
       </joint>
-      <actuator name="$back_right_wheel_joint_motor">
+      <actuator name="back_right_wheel_joint_motor">
         <mechanicalReduction>1</mechanicalReduction>
       </actuator>
     </transmission>
-    <gazebo reference="$back_right_wheel">
+    <gazebo reference="back_right_wheel">
       <mu1>5</mu1>
       <mu2>5</mu2>
     </gazebo>
 
-    <transmission name="$front_right_wheel_joint_trans">
+    <transmission name="front_right_wheel_joint_trans">
       <type>transmission_interface/SimpleTransmission</type>
-      <joint name="$front_right_wheel_joint">
+      <joint name="front_right_wheel_joint">
         <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
       </joint>
-      <actuator name="$front_right_wheel_joint_motor">
+      <actuator name="front_right_wheel_joint_motor">
         <mechanicalReduction>1</mechanicalReduction>
       </actuator>
     </transmission>
-    <gazebo reference="$front_right_wheel">
+    <gazebo reference="front_right_wheel">
       <mu1>5</mu1>
       <mu2>5</mu2>
     </gazebo>
