@@ -1,18 +1,15 @@
 <?xml version="1.0"?>
 <!-- created with Phobos 1.0.1 "Capricious Choutengan" -->
   <robot name="robot" xmlns:xacro="http://wiki.ros.org/xacro">
+
+    <xacro:include filename="$(find robot_description)/urdf/control/ros2_control.urdf.xacro"/>
+    <xacro:arg name="config_controllers" default="$(find robot_description)/config/rover_controller.yaml/"/>
+    <xacro:arg name="update_rate" default="100"/>
+    <xacro:ros2_control/> 
     
     <xacro:include filename="$(find robot_description)/urdf/sensors/sensors.urdf.xacro"/>
     <xacro:arg name="prefix" default=""/>
     <xacro:arg name="my_robot" default=""/>
-
-    <!-- <xacro:include filename="$(find robot_description)/urdf/wheels/wheels.urdf.xacro"/>
-    <xacro:arg name="prefix" default=""/> -->
-
-    <xacro:include filename="$(find robot_description)/urdf/control/ros2_control.urdf.xacro"/>
-    <xacro:arg name="config_controllers" default="$(find robot_description)/config/wheels_controller.yaml/"/>
-    <xacro:arg name="update_rate" default="100"/>
-    <xacro:ros2_control/>
 
     <link name="base_footprint">
       <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -234,7 +231,7 @@
       <parent link="base_link"/>
       <child link="back_left_wheel"/>
       <axis xyz="0 0 1.0"/>
-      <limit effort="0" velocity="0"/>
+      <limit effort="5000" velocity="100"/>
     </joint>
 
     <joint name="front_left_wheel_joint" type="continuous">
@@ -242,7 +239,7 @@
       <parent link="base_link"/>
       <child link="front_left_wheel"/>
       <axis xyz="0 0 1.0"/>
-      <limit effort="0" velocity="0"/>
+      <limit effort="5000" velocity="100"/>
     </joint>
 
     <joint name="back_right_wheel_joint" type="continuous">
@@ -250,7 +247,7 @@
       <parent link="base_link"/>
       <child link="back_right_wheel"/>
       <axis xyz="0 0 1.0"/>
-      <limit effort="0" velocity="0"/>
+      <limit effort="5000" velocity="100"/>
     </joint>
 
     <joint name="front_right_wheel_joint" type="continuous">
@@ -258,7 +255,7 @@
       <parent link="base_link"/>
       <child link="front_right_wheel"/>
       <axis xyz="0 0 1.0"/>
-      <limit effort="0" velocity="0"/>
+      <limit effort="5000" velocity="100"/>
     </joint>
 
     <transmission name="$back_left_wheel_joint_trans">

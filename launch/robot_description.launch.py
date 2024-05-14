@@ -76,7 +76,7 @@ def generate_launch_description():
     declared_arguments.append(
         DeclareLaunchArgument(
             "description_file",
-            default_value="ros2_control_A.urdf.xacro", # control_A with arm, control_B no arm
+            default_value="robot_A.urdf.xacro", # robot_A with arm, robot_B no arm
             description="URDF/XACRO description file with the robot.",
         )
     )

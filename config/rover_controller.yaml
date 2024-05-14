@@ -3,10 +3,10 @@ controller_manager:
     update_rate: 100
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
-    robot_base_control:
+    rover_base_control:
       type: diff_drive_controller/DiffDriveController
 
-robot_base_control:
+rover_base_control:
   ros__parameters:
     left_wheel_names:
       - front_left_wheel_joint
