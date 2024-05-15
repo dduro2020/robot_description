@@ -6,7 +6,7 @@
           <parameters>$(arg config_controllers)</parameters>
         </plugin>
       </gazebo>
-      <ros2_control name="rover_interface" type="system">
+      <ros2_control name="robot_interface" type="system">
         <hardware>
           <plugin>gazebo_ros2_control/GazeboSystem</plugin>
         </hardware>

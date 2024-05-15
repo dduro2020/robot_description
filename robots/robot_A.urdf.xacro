@@ -450,5 +450,4 @@
       <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
     </xacro:sensor_imu>
 
-    <!-- </xacro:macro> -->
 </robot>

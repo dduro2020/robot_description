@@ -197,7 +197,7 @@
     </link>
 
     <joint name="base_joint" type="fixed">
-      <origin xyz="0 0 0.5" rpy="0 0 0"/>
+      <origin xyz="0 0 0.8" rpy="0 0 0"/>
       <parent link="base_footprint"/>
       <child link="base_link"/>
     </joint>
@@ -242,8 +242,9 @@
       <limit effort="5000" velocity="100"/>
     </joint>
 
+    <!-- RPY modified -->
     <joint name="back_right_wheel_joint" type="continuous">
-      <origin xyz="-1.0 -1.05 -0.5" rpy="-1.5708 0 0"/>
+      <origin xyz="-1.0 -1.05 -0.5" rpy="1.5708 0 0"/>
       <parent link="base_link"/>
       <child link="back_right_wheel"/>
       <axis xyz="0 0 1.0"/>
@@ -251,13 +252,13 @@
     </joint>
 
     <joint name="front_right_wheel_joint" type="continuous">
-      <origin xyz="1.0 -1.05 -0.5" rpy="-1.5708 0 0"/>
+      <origin xyz="1.0 -1.05 -0.5" rpy="1.5708 0 0"/>
       <parent link="base_link"/>
       <child link="front_right_wheel"/>
       <axis xyz="0 0 1.0"/>
       <limit effort="5000" velocity="100"/>
     </joint>
-
+    <!--  -->
     <transmission name="back_left_wheel_joint_trans">
       <type>transmission_interface/SimpleTransmission</type>
       <joint name="back_left_wheel_joint">
