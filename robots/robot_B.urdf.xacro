@@ -244,7 +244,7 @@
 
     <!-- RPY modified -->
     <joint name="back_right_wheel_joint" type="continuous">
-      <origin xyz="-1.0 -1.05 -0.5" rpy="1.5708 0 0"/>
+      <origin xyz="-1.0 -1.05 -0.5" rpy="-1.5708 0 0"/>
       <parent link="base_link"/>
       <child link="back_right_wheel"/>
       <axis xyz="0 0 1.0"/>
@@ -252,7 +252,7 @@
     </joint>
 
     <joint name="front_right_wheel_joint" type="continuous">
-      <origin xyz="1.0 -1.05 -0.5" rpy="1.5708 0 0"/>
+      <origin xyz="1.0 -1.05 -0.5" rpy="-1.5708 0 0"/>
       <parent link="base_link"/>
       <child link="front_right_wheel"/>
       <axis xyz="0 0 1.0"/>
@@ -319,24 +319,10 @@
       <color rgba="0.64 0.64 0.64 1.0"/>
     </material>
 
-    <xacro:sensor_camera node_name="arm_camera" node_namespace="$(arg my_robot)" frame_prefix="$(arg prefix)arm_camera_" parent="$(arg prefix)base_link" >
-      <origin xyz="0.0 0.0 -0.01" rpy="0 3.141592 0"/>
+    <xacro:sensor_camera node_name="base_camera" node_namespace="$(arg my_robot)" frame_prefix="$(arg prefix)base_" parent="$(arg prefix)base_link" >
+      <origin xyz="1.5 0.0 -0.01" rpy="0 0 0"/>
     </xacro:sensor_camera>
-    <xacro:sensor_imu ns="$(arg my_robot)" prefix="$(arg prefix)imu_" parent="$(arg prefix)base_link">
+    <xacro:sensor_imu ns="$(arg my_robot)" prefix="$(arg prefix)imu" parent="$(arg prefix)base_link">
       <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
     </xacro:sensor_imu>
-
-    <!-- <xacro:robot_wheel prefix="left_b" parent="base_link" >
-      <origin xyz="-1.0 1.05 -0.5" rpy="-1.5708 0 0"/>
-    </xacro:robot_wheel>
-    <xacro:robot_wheel prefix="left_f" parent="base_link" >
-      <origin xyz="1.0 1.05 -0.5" rpy="-1.5708 0 0"/>
-    </xacro:robot_wheel>
-    <xacro:robot_wheel prefix="right_b" parent="base_link" >
-      <origin xyz="-1.0 -1.05 -0.5" rpy="-1.5708 0 0"/>
-    </xacro:robot_wheel>
-    <xacro:robot_wheel prefix="right_f" parent="base_link" >
-      <origin xyz="1.0 -1.05 -0.5" rpy="-1.5708 0 0"/>
-    </xacro:robot_wheel> -->
-
 </robot>

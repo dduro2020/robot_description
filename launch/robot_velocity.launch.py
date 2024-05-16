@@ -10,7 +10,7 @@ def generate_launch_description():
 
     package_name = 'robot_description'
     rosbag_dir = PathJoinSubstitution(
-        [workspace_dir, package_name, "rosbags", "rosbag1"]
+        [workspace_dir, package_name, "rosbags", "rosbag_sand"]
     )
     return launch.LaunchDescription([
         Node(

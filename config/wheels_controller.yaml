@@ -18,7 +18,7 @@ robot_base_control:
     wheel_radius: 0.30
     wheel_separation_multiplier: 1.0
     left_wheel_radius_multiplier: 1.0
-    right_wheel_radius_multiplier: -1.0
+    right_wheel_radius_multiplier: 1.0
     odom_frame_id: /odom
     base_frame_id: /base_footprint
     cmd_vel_timeout: 0.1
